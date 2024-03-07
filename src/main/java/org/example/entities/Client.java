@@ -13,12 +13,11 @@ public class Client extends _BaseEntity {
 
     }
 
-    public Client(int id, String name, String email, String address, List<Sale> buyHistory) {
+    public Client(int id, String name, String email, String address) {
         super(id);
         this.name = name;
         this.email = email;
         this.address = address;
-        this.purchaseHistory = buyHistory;
     }
 
     public String getName() {
@@ -53,6 +52,10 @@ public class Client extends _BaseEntity {
         this.purchaseHistory = purchaseHistory;
     }
 
+    public void addPurchase(Sale purchase) {
+        purchaseHistory().add(purchase);
+    }
+
     @Override
     public String toString() {
         return "Client{" +
@@ -60,7 +63,7 @@ public class Client extends _BaseEntity {
                 ", name: " + name +
                 ", email: " + email +
                 ", address: " + address +
-                ", purchase history: " + purchaseHistory +
+                ", purchase history: " + purchaseHistory.size() +
                 '}';
     }
 }

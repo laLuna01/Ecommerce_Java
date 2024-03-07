@@ -2,11 +2,10 @@ package main.java.org.example.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 public class Sale extends _BaseEntity {
     private  Client client;
-    private List<SaleItems> saleItems = new ArrayList<>();
+    private List<SaleItem> saleItems = new ArrayList<>();
     private String date;
     private double total;
 
@@ -14,12 +13,10 @@ public class Sale extends _BaseEntity {
 
     }
 
-    public Sale(int id, Client client, List<SaleItems> saleItems, String date, double total) {
+    public Sale(int id, Client client, String date) {
         super(id);
         this.client = client;
-        this.saleItems = saleItems;
         this.date = date;
-        this.total = total;
     }
 
     public Client getClient() {
@@ -30,11 +27,11 @@ public class Sale extends _BaseEntity {
         this.client = client;
     }
 
-    public List<SaleItems> getSaleItems() {
+    public List<SaleItem> getSaleItems() {
         return saleItems;
     }
 
-    public void setSaleItems(List<SaleItems> saleItems) {
+    public void setSaleItems(List<SaleItem> saleItems) {
         this.saleItems = saleItems;
     }
 
@@ -54,11 +51,21 @@ public class Sale extends _BaseEntity {
         this.total = total;
     }
 
+    public void addItem(SaleItem item) {
+        saleItems.add(item);
+    }
+    public double calculateTotal() {
+        for (int i = 0; i < saleItems.size(); i++) {
+            total += saleItems.get(i).getProduct().getPrice() * saleItems.get(i).getQuantity();
+        }
+        return total;
+    }
+
     @Override
     public String toString() {
         return "Sale{" +
                 "id: " + getId() +
-                ", client: " + client +
+                ", client: " + client.getName() +
                 ", sale items: " + saleItems +
                 ", date: " + date +
                 ", total: " + total +

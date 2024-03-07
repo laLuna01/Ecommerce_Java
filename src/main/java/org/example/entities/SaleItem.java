@@ -2,15 +2,15 @@ package main.java.org.example.entities;
 
 import java.util.List;
 
-public class SaleItems {
+public class SaleItem {
     private Product product;
     private int quantity;
 
-    public SaleItems() {
+    public SaleItem() {
 
     }
 
-    public SaleItems(Product product, int quantity) {
+    public SaleItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
     }
@@ -33,7 +33,7 @@ public class SaleItems {
 
     @Override
     public String toString() {
-        return "SaleItems{" +
+        return "SaleItem{" +
                 "product: " + product +
                 ", quantity: " + quantity +
                 '}';
