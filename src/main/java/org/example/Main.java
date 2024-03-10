@@ -4,6 +4,7 @@ import main.java.org.example.entities.Client;
 import main.java.org.example.entities.Product;
 import main.java.org.example.entities.Sale;
 import main.java.org.example.entities.SaleItem;
+import main.java.org.example.repositories._BaseRepositoryImpl;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,6 +27,14 @@ public class Main {
         System.out.println(mySale);
         System.out.println(eraser);
         System.out.println(myClient);
+
+        _BaseRepositoryImpl<Product> productRepository = new _BaseRepositoryImpl<>();
+
+        productRepository.Create(pencil);
+        productRepository.Create(eraser);
+        System.out.println(productRepository.Read());
+        productRepository.Delete(eraser);
+        System.out.println(productRepository.Read());
 
     }
 }
