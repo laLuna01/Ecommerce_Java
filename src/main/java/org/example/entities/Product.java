@@ -1,6 +1,4 @@
-package main.java.org.example.entities;
-
-import java.util.StringJoiner;
+package org.example.entities;
 
 public class Product extends _BaseEntity {
     private String name;

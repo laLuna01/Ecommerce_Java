@@ -1,6 +1,6 @@
-package main.java.org.example.repositories;
+package org.example.repositories;
 
-import main.java.org.example.entities._BaseEntity;
+import org.example.entities._BaseEntity;
 
 import java.util.List;
 

@@ -1,13 +1,10 @@
-package main.java.org.example.entities;
-
-import java.util.List;
+package org.example.entities;
 
 public class SaleItem {
     private Product product;
     private int quantity;
 
     public SaleItem() {
-
     }
 
     public SaleItem(Product product, int quantity) {

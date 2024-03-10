@@ -1,10 +1,10 @@
-package main.java.org.example;
+package org.example;
 
-import main.java.org.example.entities.Client;
-import main.java.org.example.entities.Product;
-import main.java.org.example.entities.Sale;
-import main.java.org.example.entities.SaleItem;
-import main.java.org.example.repositories._BaseRepositoryImpl;
+import org.example.entities.Client;
+import org.example.entities.Product;
+import org.example.entities.Sale;
+import org.example.entities.SaleItem;
+import org.example.repositories._BaseRepositoryImpl;
 
 public class Main {
     public static void main(String[] args) {

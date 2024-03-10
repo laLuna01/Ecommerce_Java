@@ -1,4 +1,4 @@
-package main.java.org.example.entities;
+package org.example.entities;
 
 public class _BaseEntity {
     private int id;
