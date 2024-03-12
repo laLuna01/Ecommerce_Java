@@ -60,4 +60,5 @@ public class Product extends _BaseEntity {
                 ", stock: " + stock +
                 '}';
     }
+
 }

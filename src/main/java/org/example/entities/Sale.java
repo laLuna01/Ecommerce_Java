@@ -1,22 +1,22 @@
 package org.example.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sale extends _BaseEntity {
     private  Client client;
     private List<SaleItem> saleItems = new ArrayList<>();
-    private String date;
+    private LocalDate date = LocalDate.now();
     private double total;
 
     public Sale() {
 
     }
 
-    public Sale(int id, Client client, String date) {
+    public Sale(int id, Client client) {
         super(id);
         this.client = client;
-        this.date = date;
     }
 
     public Client getClient() {
@@ -35,11 +35,11 @@ public class Sale extends _BaseEntity {
         this.saleItems = saleItems;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
