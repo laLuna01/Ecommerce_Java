@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +56,15 @@ public class Client extends _BaseEntity {
 
     public void addPurchase(Sale purchase) {
         purchaseHistory().add(purchase);
+    }
+
+    public Client fromJsonClient(String json) {
+        try {
+            Client client = new Gson().fromJson(json, Client.class);
+            return client;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

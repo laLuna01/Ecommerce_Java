@@ -1,5 +1,12 @@
 package org.example.entities;
 
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.stream.JsonReader;
+
+import java.io.FileReader;
+import java.util.List;
+
 public class Product extends _BaseEntity {
     private String name;
     private String description;
@@ -50,14 +57,23 @@ public class Product extends _BaseEntity {
         this.stock = stock;
     }
 
+    public Product fromJsonProduct(String json) {
+        try {
+            Product product = new Gson().fromJson(json, Product.class);
+            return product;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
-                "id: " + getId() +
-                ", name: " + name +
+        return "{" +
+                "name: " + name +
                 ", description: " + description +
                 ", price: " + price +
                 ", stock: " + stock +
+                ", id: " + getId() +
                 '}';
     }
 

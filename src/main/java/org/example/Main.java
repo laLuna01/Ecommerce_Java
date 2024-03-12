@@ -34,9 +34,24 @@ public class Main {
 
         productRepository.Create(pencil);
         productRepository.Create(eraser);
+        System.out.println(pencil);
 
-        productRepository.Create(myClient);
         System.out.println(productRepository.Read());
-        System.out.println(productRepository.getType());
+        productRepository.toJson();
+
+        productRepository.Delete(pencil);
+        productRepository.Delete(eraser);
+        System.out.println(productRepository.Read());
+
+        productRepository.fromJson();
+        System.out.println(productRepository.Read());
+
+        pencil = pencil.fromJsonProduct(productRepository.fromJson());
+        System.out.println(pencil.getName());
+        System.out.println(pencil);
+//        productRepository.Delete(pencil);
+//        System.out.println(productRepository.Read());
+
+
     }
 }

@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import com.google.gson.Gson;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,15 @@ public class Sale extends _BaseEntity {
             total += saleItems.get(i).getProduct().getPrice() * saleItems.get(i).getQuantity();
         }
         return total;
+    }
+
+    public Sale fromJsonSale(String json) {
+        try {
+            Sale sale = new Gson().fromJson(json, Sale.class);
+            return sale;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
