@@ -57,15 +57,6 @@ public class Product extends _BaseEntity {
         this.stock = stock;
     }
 
-    public Product fromJsonProduct(String json) {
-        try {
-            Product product = new Gson().fromJson(json, Product.class);
-            return product;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public String toString() {
         return "{" +

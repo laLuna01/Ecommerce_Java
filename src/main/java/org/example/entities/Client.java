@@ -58,15 +58,6 @@ public class Client extends _BaseEntity {
         purchaseHistory().add(purchase);
     }
 
-    public Client fromJsonClient(String json) {
-        try {
-            Client client = new Gson().fromJson(json, Client.class);
-            return client;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public String toString() {
         return "Client{" +

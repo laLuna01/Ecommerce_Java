@@ -3,13 +3,17 @@ package org.example.repositories;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import org.example.entities.Client;
 import org.example.entities.Product;
+import org.example.entities.Sale;
 import org.example.entities._BaseEntity;
 
 import javax.xml.namespace.QName;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.CharBuffer;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -57,6 +61,7 @@ public class _BaseRepositoryImpl<T extends _BaseEntity> implements _BaseReposito
     @Override
     public void Delete(_BaseEntity entity) {
         entities.removeIf(item -> item.getId() == entity.getId());
+        System.out.println("Object deleted");
     }
 
     public String createFile() {
@@ -67,9 +72,9 @@ public class _BaseRepositoryImpl<T extends _BaseEntity> implements _BaseReposito
     public void toJson() {
         String path = createFile();
         try (FileWriter fileWriter = new FileWriter(path)) {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             BufferedWriter writer = new BufferedWriter(fileWriter);
-            writer.write(gson.toJson(entities));
+            writer.write(gson.toJson(this.entities));
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -80,12 +85,38 @@ public class _BaseRepositoryImpl<T extends _BaseEntity> implements _BaseReposito
         String path = createFile();
         var gson = new Gson();
         try (var jsonReader = new JsonReader(new FileReader(path))) {
-            List products =  gson.fromJson(jsonReader, List.class);
-            var productString = products.get(0).toString();
-            return productString;
+            Type listType = jsonTypes();
+            ArrayList newEntities = gson.fromJson(jsonReader, listType);
+            for (Object item: newEntities) {
+                if (this.type.equals(Product.class)) {
+                    Product product = (Product) item;
+                    entities.add((T) product);
+                } else if (this.type.equals(Client.class)) {
+                    Client client = (Client) item;
+                    entities.add((T) client);
+                } else if (this.type.equals(Sale.class)) {
+                    Sale sale = (Sale) item;
+                    entities.add((T) sale);
+                }
+            }
+            return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    public Type jsonTypes() {
+        Type jsonListType = null;
+        if (this.type.equals(Product.class)) {
+            Type productListType = new TypeToken<ArrayList<Product>>(){}.getType();
+            jsonListType = productListType;
+        } else if (this.type.equals(Client.class)) {
+            Type clientListType = new TypeToken<ArrayList<Client>>(){}.getType();
+            jsonListType = clientListType;
+        } else if (this.type.equals(Sale.class)) {
+            Type saleListType = new TypeToken<ArrayList<Sale>>(){}.getType();
+            jsonListType = saleListType;
+        }
+        return jsonListType;
+    }
 }

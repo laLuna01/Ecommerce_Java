@@ -6,6 +6,9 @@ import org.example.entities.Sale;
 import org.example.entities.SaleItem;
 import org.example.repositories._BaseRepositoryImpl;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -32,6 +35,8 @@ public class Main {
         System.out.println(mySale);
         System.out.println(myClient);
 
+        saleRepository.Create(mySale);
+
         productRepository.Create(pencil);
         productRepository.Create(eraser);
         System.out.println(pencil);
@@ -44,14 +49,7 @@ public class Main {
         System.out.println(productRepository.Read());
 
         productRepository.fromJson();
+
         System.out.println(productRepository.Read());
-
-        pencil = pencil.fromJsonProduct(productRepository.fromJson());
-        System.out.println(pencil.getName());
-        System.out.println(pencil);
-//        productRepository.Delete(pencil);
-//        System.out.println(productRepository.Read());
-
-
     }
 }

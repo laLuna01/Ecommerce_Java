@@ -63,15 +63,6 @@ public class Sale extends _BaseEntity {
         return total;
     }
 
-    public Sale fromJsonSale(String json) {
-        try {
-            Sale sale = new Gson().fromJson(json, Sale.class);
-            return sale;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public String toString() {
         return "Sale{" +
