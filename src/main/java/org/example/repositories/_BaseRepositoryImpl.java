@@ -36,9 +36,9 @@ public class _BaseRepositoryImpl<T extends _BaseEntity> implements _BaseReposito
     public void Create(_BaseEntity entity) {
         if (entity.getClass() == this.getType()) {
             entities.add((T) entity);
-            System.out.println("Object added");
+            System.out.println("\nObject created\n");
         } else {
-            System.out.println("This object is not a " + this.getType().getSimpleName());
+            System.out.println("\nThis is not a " + this.getType().getSimpleName() + "\n");
         }
     }
 
@@ -52,16 +52,36 @@ public class _BaseRepositoryImpl<T extends _BaseEntity> implements _BaseReposito
         entities.removeIf(item -> item.getId() == entity.getId());
         if (entity.getClass() == this.getType()) {
             entities.add((T) entity);
-            System.out.println("Object updated");
+            System.out.println("\nObject updated\n");
         } else {
-            System.out.println("This object is not a " + this.getType().getSimpleName());
+            System.out.println("\nThis is not a " + this.getType().getSimpleName() + "\n");
         }
     }
 
     @Override
-    public void Delete(_BaseEntity entity) {
-        entities.removeIf(item -> item.getId() == entity.getId());
-        System.out.println("Object deleted");
+    public void Delete(int delId) {
+        entities.removeIf(item -> item.getId() == delId);
+        System.out.println("\nObject deleted\n");
+    }
+
+    public Client addClientToSale(int clientId) {
+        Client client = new Client();
+        for (_BaseEntity item : entities) {
+            if (item.getId() == clientId) {
+                client = (Client) item;
+            }
+        }
+        return client;
+    }
+
+    public Product addProductToSaleItem(int productId) {
+        Product product = new Product();
+        for (_BaseEntity item : entities) {
+            if (item.getId() == productId) {
+                product = (Product) item;
+            }
+        }
+        return product;
     }
 
     public String createFile() {
@@ -82,27 +102,35 @@ public class _BaseRepositoryImpl<T extends _BaseEntity> implements _BaseReposito
     }
 
     public String fromJson() {
+        String result;
         String path = createFile();
-        var gson = new Gson();
-        try (var jsonReader = new JsonReader(new FileReader(path))) {
-            Type listType = jsonTypes();
-            ArrayList newEntities = gson.fromJson(jsonReader, listType);
-            for (Object item: newEntities) {
-                if (this.type.equals(Product.class)) {
-                    Product product = (Product) item;
-                    entities.add((T) product);
-                } else if (this.type.equals(Client.class)) {
-                    Client client = (Client) item;
-                    entities.add((T) client);
-                } else if (this.type.equals(Sale.class)) {
-                    Sale sale = (Sale) item;
-                    entities.add((T) sale);
+        File file = new File(path);
+        if (file.exists()) {
+            var gson = new Gson();
+            try (var jsonReader = new JsonReader(new FileReader(path))) {
+                Type listType = jsonTypes();
+                ArrayList newEntities = gson.fromJson(jsonReader, listType);
+                for (Object item: newEntities) {
+                    if (this.type.equals(Product.class)) {
+                        Product product = (Product) item;
+                        entities.add((T) product);
+                    } else if (this.type.equals(Client.class)) {
+                        Client client = (Client) item;
+                        entities.add((T) client);
+                    } else if (this.type.equals(Sale.class)) {
+                        Sale sale = (Sale) item;
+                        entities.add((T) sale);
+                    }
                 }
+                result = "Success";
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } else {
+            System.out.println("No file");
+            result = "Fail";
         }
+        return result;
     }
 
     public Type jsonTypes() {

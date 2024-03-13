@@ -56,6 +56,7 @@ public class Sale extends _BaseEntity {
     public void addItem(SaleItem item) {
         saleItems.add(item);
     }
+
     public double calculateTotal() {
         for (int i = 0; i < saleItems.size(); i++) {
             total += saleItems.get(i).getProduct().getPrice() * saleItems.get(i).getQuantity();

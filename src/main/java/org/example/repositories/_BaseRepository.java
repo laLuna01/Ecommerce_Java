@@ -8,5 +8,5 @@ public interface _BaseRepository<T extends _BaseEntity> {
     public void Create(T entity);
     public List<T> Read();
     public void Update(T entity);
-    public void Delete(T entity);
+    public void Delete(int idItem);
 }
